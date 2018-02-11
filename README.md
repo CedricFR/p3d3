@@ -16,11 +16,13 @@ or download repository from Github and `python setup.py install`
 
 ## Usage
 
+Run:
 ```python
 import p3d3
+p3d3.init()
 ```
 
-Then in the notebook, run `p3d3.init()` to download & initialize the d3 and Vega engines.
+to download & initialize the d3 and Vega engines. Then you can use the functions `p3d3.p3d3()` and `p3d3.vegalite()`
 
 Examples on how to use P3D3 are available in the `examples/` folder.
 
