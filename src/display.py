@@ -9,11 +9,31 @@ def init(version="4.13.0"):
     display(HTML('''<script>
 requirejs.config({
     paths: {
-        d3: "//cdnjs.cloudflare.com/ajax/libs/d3/'''+version+'''/d3"
+        d3: "//cdnjs.cloudflare.com/ajax/libs/d3/'''+version+'''/d3",
+        vg: "https://cdn.jsdelivr.net/npm/vega@3.0.10?noext",
+        vl: "https://cdn.jsdelivr.net/npm/vega-lite@2.1.3?noext",
+        vg_embed: "https://cdn.jsdelivr.net/npm/vega-embed@3.0.0?noext"
+    },
+    shim: {
+        vg_embed: {deps: ["vg.global", "vl.global"]},
+        vl: {deps: ["vg"]},
+        vg: {deps: ["d3"]}
     }
 });
 require(['d3'], function(d3) {
     window.d3 = d3;
+});
+
+define('vg.global', ['vg'], function(vgGlobal) {
+    window.vega = vgGlobal;
+});
+
+define('vl.global', ['vl'], function(vlGlobal) {
+    window.vl = vlGlobal;
+});
+
+require(["vg_embed"], function(vg_embed) {
+    window.vg_embed = vg_embed;
 });
 </script>'''))
 
@@ -40,4 +60,21 @@ def p3d3(df, jsfile, params={}, width=800, height=500):
         'params': json.dumps(params),
         'width': width,
         'height': height
+    })))
+
+def vegalite(df, specs):
+    tmp = Template('''
+        <div id="$id"></div>
+        <script type="text/javascript">
+            vg_embed("#$id", $specs, {actions: {source: false, editor: false} });
+
+        </script>''')
+
+    specifications = specs
+    specifications['$schema'] = "https://vega.github.io/schema/vega-lite/v2.json"
+    specifications['data'] = dict(values = df.to_dict(orient='records'))
+
+    display(HTML(tmp.substitute({
+        'id': "a"+str(uuid.uuid4()),
+        'specs': json.dumps(specifications)
     })))
