@@ -4,6 +4,7 @@ setup(
     name = 'p3d3',
     version = '0.0.1',
     author = 'Cedric Canovas',
+    author_email = 'dev@canovas.me',
     keywords = '',
     packages = ['p3d3'],
     include_package_data=True,
