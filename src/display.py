@@ -4,6 +4,7 @@ from IPython.display import HTML, display
 from string import Template
 import json
 import uuid
+from .util import sanitize
 
 def init(version="4.13.0"):
     display(HTML('''<script>
@@ -56,7 +57,7 @@ def p3d3(df, jsfile, params={}, width=800, height=500):
     display(HTML(tmp.substitute({
         'id': "a"+str(uuid.uuid4()),
         'script': script,
-        'data': df.to_json(orient='records'),
+        'data': sanitize(df).to_json(orient='records'),
         'params': json.dumps(params),
         'width': width,
         'height': height
@@ -72,7 +73,7 @@ def vegalite(df, specs):
 
     specifications = specs
     specifications['$schema'] = "https://vega.github.io/schema/vega-lite/v2.json"
-    specifications['data'] = dict(values = df.to_dict(orient='records'))
+    specifications['data'] = dict(values = sanitize(df).to_dict(orient='records'))
 
     display(HTML(tmp.substitute({
         'id': "a"+str(uuid.uuid4()),
