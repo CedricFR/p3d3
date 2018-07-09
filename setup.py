@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'p3d3',
-    version = '0.0.2',
+    version = '0.0.3',
     author = 'Cedric Canovas',
     author_email = 'dev@canovas.me',
     keywords = '',
