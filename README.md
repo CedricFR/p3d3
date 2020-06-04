@@ -26,6 +26,8 @@ to download & initialize the d3 and Vega engines. Then you can use the functions
 
 Examples on how to use P3D3 are available in the `examples/` folder.
 
+By default the D3 version used is 4.13.0, you can override it with `p3d3.init(version="5.16.0")`. All versions available on Cloudflare CDN can be used.
+
 ## Contribution
 
 This package is in its early stages. You are very welcome to report issues & propose pull requests to improve it.
